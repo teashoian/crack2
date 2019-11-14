@@ -72,27 +72,19 @@ int main(int argc, char *argv[])
     // Print the matching dictionary entry.
     // Need two nested loops.
     
-    char line[1000]; /*
-    for (int i=0;i<dlen;i++){
-        while(fgets(line,1000,hash_file)!=NULL){
-            line[strlen(line)-1]='\0'; //replace newline on hash with a null character
-            if((tryguess(line,dict[i]))==1){
-                printf("%s %s \n",line, dict[i]);
-            }
-            printf("%s %s why?\n",line, dict[i]); //test code
-            
-        }
-    }*/
-    
+    char line[1000]; 
     while(fgets(line,1000,hash_file)!=NULL){
         line[strlen(line)-1]='\0'; //replace newline on hash with a null character
         for(int i=0;i<dlen;i++){
             if((tryguess(line,dict[i]))==1){
                 printf("%s %s \n",line, dict[i]);
             }
-          //  printf("%s %s why?\n",line, dict[i]); //test code
-            
+
         }
     }
-    //printf("%d\n",dlen); //test code
+    for (int i=0;i<dlen;i++){
+        free(dict[i]);
+    }
+    free(dict);
+    fclose(hash_file);
 }
