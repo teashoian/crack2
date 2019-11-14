@@ -1,13 +1,13 @@
 # -*- indent-tabs-mode:t; -*-
 
 # The number of random hashes to pull from the rockyou file
-NUM_HASHES=20
+NUM_HASHES=200
 
 # Which rockyou file to use
-ROCKYOU=rockyou100.txt
+#ROCKYOU=rockyou100.txt
 #ROCKYOU=rockyou1000.txt
 #ROCKYOU=rockyou2000.txt
-#ROCKYOU=rockyou1m.txt
+ROCKYOU=rockyou1m.txt
 
 all: hashpass crack
 
@@ -26,16 +26,12 @@ hashpass.o: hashpass.c
 # See the rule for hashpass above.
 # Remove the "@echo" lines.
 crack: crack.o md5.o
-	@echo No rule for building the executable.
-	@echo "  Modify the Makefile first."
-
+	clang crack.o md5.o -o crack -l crypto
 
 # Add a recipe to build crack.o out of crack.c
 # Remove the "@echo" lines.
 crack.o: crack.c
-	@echo No rule for building crack.o
-	@echo "  Modify the Makefile first"
-
+	clang -g -Wall -c crack.c
 
 hashes: hashpass
 	shuf -n $(NUM_HASHES) $(ROCKYOU) > passwords.txt
